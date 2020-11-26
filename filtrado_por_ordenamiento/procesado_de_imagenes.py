@@ -1,4 +1,4 @@
-# Instituto Tecnológico de Costa Rica               #
+#               #
 # Curso:                                            #
 # Escuela de                                        #
 # Proyecto:                                         #
