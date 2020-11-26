@@ -1,3 +1,11 @@
+# Instituto Tecnológico de Costa Rica               #
+# Curso:                                            #
+# Escuela de                                        #
+# Proyecto:                                         #
+# Estudiante:                                       #
+# Carné:                                            #
+# Fecha:                                            #
+#####################################################
 # Este script contiene todos los metodos o funciones necesarias para el procesado de imagenes por ordenamiento:
 # 0) Como etapa preliminar se encuentran las bibliotecas utilizadas para el uso de imagenes: matplotlib(convertir imagenes
 #    a gris), numpy (para la elaboración de estructuras de datos en dos dimensiones como lo son las matrices), imageio (para
@@ -17,6 +25,9 @@ import time
 
 
 # --------------------------------------Parte 1: Algoritmos de ordenamiento--------------------------------------------#
+# Esta funcion recibe como para metros una lista, a su vez el parámetro l, que 
+# es la frontera izquierda o el inicio de la lista y r es el final de la lista.
+# Se deben de pasar esos argumentos por la naturaleza recursiva de este algoritmo.
 def merge_sort(list_, left, right):
     if left < right:
         # Same as (l+r)//2, but avoids overflow for
@@ -26,12 +37,15 @@ def merge_sort(list_, left, right):
         merge_sort(list_, left, m)
         merge_sort(list_, m + 1, right)
         # Take everything together
-        merge(list_, left, m, right)
+        merge_aux(list_, left, m, right)
     else:
         return list_
 
 
-def merge(arr, l, m, r):
+# Esta función toma la lista entera y la parte según los valores de l(left), 
+# r(right), y m que corresponde al elemento medio de las lista.
+        
+def merge_aux(arr, l, m, r):
     n1 = m - l + 1
     n2 = r - m
 
@@ -46,7 +60,7 @@ def merge(arr, l, m, r):
     for j in range(0, n2):
         R[j] = arr[m + 1 + j]
 
-    # Merge the temp arrays back into arr[left..rith]
+    # Merge the temp arrays back into arr[left..right]
     # Initial index of first subarray
     i = 0
     # Initial index of second subarray
@@ -77,20 +91,27 @@ def merge(arr, l, m, r):
         j += 1
         k += 1
 
-
+# Esta funcion ordena la lista con el algoritmo de Insertion sort.
+# Recibe una lista.
+# Retorna una lista ordenada.
 def insertion_sort(list_):
+    # Se recorre la lista:
     for i in range(1, len(list_)):
         key = list_[i]
         # Move elements of arr[0..i-1], that are greater than key,
         # to one position ahead of their current position
         j = i - 1
+        # Corre los elementos una posición a la derecha para poder insertar 
+        # el valor correspondiente en esa sección de la lista:
         while j >= 0 and key < list_[j]:
             list_[j + 1] = list_[j]
             j -= 1
         list_[j + 1] = key
     return list_
 
-
+# Esta función ordena una lista con el algoritmo de Bubble sort.
+# Recibe una lista.
+# Retorna una lista ordenada.
 def bubble_sort(list_):
     # This algorithm swap adjacent items of the list if they are in disorder
     # Getting the length of the input list
@@ -101,6 +122,8 @@ def bubble_sort(list_):
         for i in range(length_list):
             a = list_[i]
             b = list_[i + 1]
+            # [.., a, b, ...]
+            # If a is greater than b so the algorithm should swapp the values:
             if a > b:
                 list_[i + 1] = a
                 list_[i] = b
@@ -109,7 +132,10 @@ def bubble_sort(list_):
     return list_
 
 
-# This function ensures that a list is in order
+# Esta función verifica que una lista este ordenada.
+# Recibe una lista.
+# Retorna un booleano indicando True si esta ordenada la lista y false
+# en caso contrario.
 def sort_verifier(list_):
     # Getting the length of the input list
     length_list = len(list_) - 1
@@ -122,7 +148,9 @@ def sort_verifier(list_):
             continue
     return flag
 
-
+# Esta funcion ordena una lista según la elija el usuario:
+# Recibe una lista en y el tipo de ordenamiento.
+# Retorna la lista ordenada.
 def sort_list_by(list_, type_):
     out_put_list = []
     # Bubble sort
