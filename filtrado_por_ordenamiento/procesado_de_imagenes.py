@@ -1390,7 +1390,7 @@ def abrir_imagen_procesar(ruta_imagen, tamanno_ventana, tipo_ordenamiento, save_
 
     
 
-    print("El procesamiento de la imagenn duró " + str(tiempo_final*1000) + " milisegundos, con una ventana de tamaño " + str(
+    print("El procesamiento de la imagen duró " + str(tiempo_final*1000) + " milisegundos, con una ventana de tamaño " + str(
         tamanno_ventana) + " y usando el algoritmo de ordenamiento " + str(tipo_ordenamiento_str) + ".")
     plt.imshow(imagen_procesada, cmap=plt.get_cmap('gray'))
     plt.show()
