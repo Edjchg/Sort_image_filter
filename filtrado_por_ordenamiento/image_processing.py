@@ -1215,10 +1215,6 @@ def constructor_ventana(i, j, imagen, tamanno_ventana):
                     ventana_salida[n][m] = imagen[i][j_]
                     j_ += 1
                 i += 1
-
-
-
-
     return ventana_salida
 
 
@@ -1234,14 +1230,23 @@ def to_grey(imagen):
 
 def abrir_imagen(ruta_imagen, tamanno_ventana, tipo_ordenamiento, save_path):
     imagen = mpimg.imread(ruta_imagen)
-    imagen_gris = to_grey(imagen)
-    ventana = constructor_ventana(2, 1, imagen_gris, 7)
-    print(ventana)
-    plt.imshow(imagen_gris, cmap=plt.get_cmap('gray'))
-    plt.show()
-    tiempo_inicio = time.time()
-    imagen_procesada = procesar_imagen(imagen_gris, tamanno_ventana, tipo_ordenamiento)
-    tiempo_final = time.time() - tiempo_inicio
+    print(imagen)
+    if ruta_imagen.find(".jpg") != - 1:
+        imagen_gris = to_grey(imagen)
+        ventana = constructor_ventana(2, 1, imagen_gris, 7)
+        print(ventana)
+        plt.imshow(imagen_gris, cmap=plt.get_cmap('gray'))
+        plt.show()
+        tiempo_inicio = time.time()
+        imagen_procesada = procesar_imagen(imagen_gris, tamanno_ventana, tipo_ordenamiento)
+        tiempo_final = time.time() - tiempo_inicio
+    elif ruta_imagen.find(".png") != - 1:
+        plt.imshow(imagen, cmap=plt.get_cmap('gray'))
+        plt.show()
+        tiempo_inicio = time.time()
+        imagen_procesada = procesar_imagen(imagen, tamanno_ventana, tipo_ordenamiento)
+        tiempo_final = time.time() - tiempo_inicio
+
     if tipo_ordenamiento == 0:
         tipo_ordenamiento = "Bubble sort"
     elif tipo_ordenamiento == 1:
@@ -1275,4 +1280,3 @@ def procesar_imagen(imagen, tamanno_ventana, sort_type):
             nuevo_pixel = lista_ordenada[elemento_medio]
             imagen_procesada[i][j] = nuevo_pixel
     return imagen_procesada
-
