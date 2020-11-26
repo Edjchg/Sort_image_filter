@@ -1363,34 +1363,35 @@ def to_grey(imagen):
     return imagen_nueva_salida
 
 
-def abrir_imagen(ruta_imagen, tamanno_ventana, tipo_ordenamiento, save_path):
+def abrir_imagen_procesar(ruta_imagen, tamanno_ventana, tipo_ordenamiento, save_path):
+    if tipo_ordenamiento == 0:
+        tipo_ordenamiento_str = "Bubble sort"
+    elif tipo_ordenamiento == 1:
+        tipo_ordenamiento_str = "Insertion sort"
+    elif tipo_ordenamiento == 2:
+        tipo_ordenamiento_str = "Merge sort"
+        
     imagen = mpimg.imread(ruta_imagen)
-    print(imagen)
     if ruta_imagen.find(".jpg") != - 1:
         imagen_gris = to_grey(imagen)
-        ventana = constructor_ventana(2, 1, imagen_gris, 7)
-        print(ventana)
         plt.imshow(imagen_gris, cmap=plt.get_cmap('gray'))
         plt.show()
+        print("Procesando la imagen con un tamaño de ventana de " + str(tamanno_ventana)+"x" +str(tamanno_ventana) +" y con el algoritmo de "+tipo_ordenamiento_str+".")
         tiempo_inicio = time.time()
         imagen_procesada = procesar_imagen(imagen_gris, tamanno_ventana, tipo_ordenamiento)
         tiempo_final = time.time() - tiempo_inicio
     elif ruta_imagen.find(".png") != - 1:
         plt.imshow(imagen, cmap=plt.get_cmap('gray'))
         plt.show()
+        print("Procesando la imagen con un tamaño de ventana de " + str(tamanno_ventana) + "x"+str(tamanno_ventana) +" y con el algoritmo de "+tipo_ordenamiento_str+".")
         tiempo_inicio = time.time()
         imagen_procesada = procesar_imagen(imagen, tamanno_ventana, tipo_ordenamiento)
         tiempo_final = time.time() - tiempo_inicio
 
-    if tipo_ordenamiento == 0:
-        tipo_ordenamiento = "Bubble sort"
-    elif tipo_ordenamiento == 1:
-        tipo_ordenamiento = "Insertion sort"
-    elif tipo_ordenamiento == 2:
-        tipo_ordenamiento = "Merge sort"
+    
 
-    print("El procesamiento de la imagenn duró " + str(tiempo_final) + " segundos, con una ventana de tamaño " + str(
-        tamanno_ventana) + " y usando el algoritmo de ordenamiento " + str(tipo_ordenamiento) + ".")
+    print("El procesamiento de la imagenn duró " + str(tiempo_final*1000) + " milisegundos, con una ventana de tamaño " + str(
+        tamanno_ventana) + " y usando el algoritmo de ordenamiento " + str(tipo_ordenamiento_str) + ".")
     plt.imshow(imagen_procesada, cmap=plt.get_cmap('gray'))
     plt.show()
     imagen_procesada.astype(int)
@@ -1415,15 +1416,28 @@ def procesar_imagen(imagen, tamanno_ventana, sort_type):
             nuevo_pixel = lista_ordenada[elemento_medio]
             imagen_procesada[i][j] = nuevo_pixel
     return imagen_procesada
+def abrir_imagen(imagen):
+    nueva_imagen = mpimg.imread(imagen)
+    if imagen.find(".jpg") != - 1:
+        imagen_gris = to_grey(nueva_imagen)
+        plt.imshow(imagen_gris, cmap=plt.get_cmap('gray'))
+        plt.show()
+    elif imagen.find(".png") != - 1:
+        plt.imshow(nueva_imagen, cmap=plt.get_cmap('gray'))
+        plt.show()
 # --------------------------------------------Fin de la segunda parte--------------------------------------------------#
 # ---------------------------------Parte 3: Interacción con el usuario-------------------------------------------------#
 
-input_image = "C:/Users/WPC/Documents/Sort_image_filter/filtrado_por_ordenamiento/monalisa.png"
+input_image = "C:/Users/Edgar/Documents/filtrado_por_ordenamiento/Sort_image_filter/filtrado_por_ordenamiento/monalisa.png"
 kernel_size = 7
-sort_type = 1
+sort_type = 2
 # 0 -> Bubble
 # 1 -> Insertion
 # 2 -> Merge
-output_image = "C:/Users/WPC/Documents/Sort_image_filter/filtrado_por_ordenamiento/images/output_monalisa_7x7.png"
+output_image = "C:/Users/Edgar/Documents/filtrado_por_ordenamiento/Sort_image_filter/filtrado_por_ordenamiento/monalisa_7x7.png"
 
-abrir_imagen(input_image, kernel_size, sort_type, output_image)
+usuario_elige_opcion = 1
+if usuario_elige_opcion == 1:
+    abrir_imagen_procesar(input_image, kernel_size, sort_type, output_image)
+elif usuario_elige_opcion == 2:
+    abrir_imagen(input_image)
